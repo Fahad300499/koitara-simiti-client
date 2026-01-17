@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react'
 import {
   GoogleAuthProvider,
   getAuth,
-  getRedirectResult,
   onAuthStateChanged,
   signInWithPopup,
-  signInWithRedirect,
   signOut,
 } from 'firebase/auth'
 import { app } from '../firebase/firebase.config'
@@ -25,8 +23,7 @@ const AuthProvider = ({ children }) => {
 
   const signInWithGoogle = () => {
     setLoading(true)
-    // return signInWithPopup(auth, googleProvider)
-    return signInWithRedirect(auth, googleProvider)
+    return signInWithPopup(auth, googleProvider)
   }
 
   const logOut = async () => {
@@ -38,20 +35,6 @@ const AuthProvider = ({ children }) => {
 
   // onAuthStateChange
  useEffect(() => {
-
-  // ১. রিডাইরেক্ট হয়ে ফিরে আসার পর রেজাল্ট চেক করা
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result?.user) {
-          console.log("Logged in after redirect:", result.user);
-        }
-      })
-      .catch((error) => {
-        console.error("Redirect Error:", error);
-      });
-
-    // ২. অ্যাথ স্ট্যাটাস চেক করা
-
   const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
     setUser(currentUser);
     
