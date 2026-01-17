@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import {
   GoogleAuthProvider,
   getAuth,
+  getRedirectResult,
   onAuthStateChanged,
   signInWithPopup,
   signInWithRedirect,
@@ -37,6 +38,20 @@ const AuthProvider = ({ children }) => {
 
   // onAuthStateChange
  useEffect(() => {
+
+  // ১. রিডাইরেক্ট হয়ে ফিরে আসার পর রেজাল্ট চেক করা
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) {
+          console.log("Logged in after redirect:", result.user);
+        }
+      })
+      .catch((error) => {
+        console.error("Redirect Error:", error);
+      });
+
+    // ২. অ্যাথ স্ট্যাটাস চেক করা
+
   const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
     setUser(currentUser);
     
