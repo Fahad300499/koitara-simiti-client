@@ -4,6 +4,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
 } from 'firebase/auth'
 import { app } from '../firebase/firebase.config'
@@ -23,7 +24,8 @@ const AuthProvider = ({ children }) => {
 
   const signInWithGoogle = () => {
     setLoading(true)
-    return signInWithPopup(auth, googleProvider)
+    // return signInWithPopup(auth, googleProvider)
+    return signInWithRedirect(auth, googleProvider)
   }
 
   const logOut = async () => {
